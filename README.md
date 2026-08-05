@@ -1,57 +1,39 @@
-# MILI Explorer – Montréal Agglomeration Edition
+# MILI Explorer 2.1 — Montréal Agglomeration Edition
 
-A fully static, free, GitHub Pages-ready property intelligence explorer covering the **entire Montréal agglomeration**.
+Static GitHub Pages property explorer covering **336,878 unique physical assessment sites** across the Montréal agglomeration.
 
-## Coverage
+## Version 2.1 search
 
-- **336,878 unique physical assessment sites**
-- Montréal plus all 15 reconstituted municipalities in the agglomeration
-- No property-use prefilter: residential, commercial, industrial, institutional, vacant and other uses are included
-- Condominium assessment records sharing one physical geometry are consolidated into one physical site and flagged
+- Partial address search
+- Full mailing-address search
+- Accent, punctuation, postal-code and street-type tolerance
+- Minor street-name typo correction
+- Ranked search results
+- Live autocomplete suggestions
+- Search across address, matricule, municipality, property use, neighbourhood and street fields
 
-## Municipalities
+Examples:
 
-- Baie-D'Urfé
-- Beaconsfield
-- Côte-Saint-Luc
-- Dollard-des-Ormeaux
-- Dorval
-- Hampstead
-- L'Île-Dorval
-- Kirkland
-- Mont-Royal
-- Montréal-Est
-- Montréal-Ouest
-- Pointe-Claire
-- Sainte-Anne-de-Bellevue
-- Senneville
-- Westmount
-- Montréal
+- `5281 Chambord`
+- `5281 Chambord St. Montreal, QC H2J 3N4`
+- `5281 Chambrod`
+- `Chambord`
+- `Westmount`
+- `Commercial`
 
-## Capabilities
+## Deploy
 
-- Search by address, matricule, municipality, use, housing area and street information
-- Dynamic filters generated from `data/schema.json`
-- Municipality filter with readable names
-- Numeric, category, boolean and text filters
-- Map clustering and ranked result cards
-- Property detail view containing every imported field
-- Opportunity, constraint-risk and data-confidence scores
-- Saved properties and browser-local notes
-- CSV export of every match
-- Presets: All, Residential 1–2, V1 Screen and Premium
+Use **Settings → Pages → Deploy from a branch → main → /(root)**.
 
-## Search and display limits
+No GitHub Actions workflow is required.
 
-The filter engine evaluates all **336,878 sites**. For browser performance, it displays up to 250 cards and 3,000 map markers. CSV export contains all matching rows.
+## Expected preset counts
 
-## Deployment
+- All: 336,878
+- Residential 1–2: 228,738
+- V1 Screen: 2,035
+- Premium: 15
 
-1. Create a public GitHub repository.
-2. Upload all files while preserving their paths.
-3. In **Settings → Pages**, choose **Deploy from a branch**, `main`, `/ (root)`.
-4. The expected loaded count is **336,878**.
+## Limitations
 
-## Important limitations
-
-This is a preliminary screening tool. It does not confirm legal zoning, ownership, title, tax assessment values, legal lot boundaries, FAR, height, setbacks, subdivision rights or permitted unit count.
+Screening only. The public datasets do not confirm legal zoning, ownership, assessed dollar values, taxes, legal cadastre, FAR, setbacks, height, title restrictions or subdivision rights.
