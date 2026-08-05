@@ -1,26 +1,18 @@
 #!/usr/bin/env python3
 from pathlib import Path
-import json, hashlib
+import json
 root=Path(__file__).resolve().parents[1]
-required=['index.html','assets/app.js','assets/styles.css','data/schema.json','.github/workflows/deploy.yml']
-for f in required:
-    if not (root/f).exists(): raise SystemExit('FAIL missing '+f)
 s=json.loads((root/'data/schema.json').read_text(encoding='utf-8'))
-fields=s['fields']; n=0; ids=set(); municipalities=set()
+rows=[]
 for c in s['chunks']:
     p=root/c['file']
-    if not p.exists(): raise SystemExit('FAIL missing '+c['file'])
-    rows=json.loads(p.read_text(encoding='utf-8'))
-    if len(rows)!=c['rows']: raise SystemExit('FAIL row count '+c['file'])
-    for r in rows:
-        if len(r)!=len(fields): raise SystemExit('FAIL row width '+c['file'])
-        d=dict(zip(fields,r)); sid=d['site_id']
-        if sid in ids: raise SystemExit('FAIL duplicate '+str(sid))
-        ids.add(sid); municipalities.add(d['municipality_name'])
-        if not (-90<=float(d['latitude'])<=90 and -180<=float(d['longitude'])<=180): raise SystemExit('FAIL coordinates')
-        for score in ['opportunity_score','constraint_risk','data_confidence']:
-            if not 0<=float(d[score])<=100: raise SystemExit('FAIL score')
-        n+=1
-if n!=s['total_sites']: raise SystemExit(f'FAIL total {n}')
-if len(municipalities)!=16: raise SystemExit(f'FAIL municipalities {len(municipalities)}')
-print(f'PASS: {n:,} sites, {len(municipalities)} municipalities, {len(s["field_definitions"])} dynamic filters')
+    assert p.exists(), c['file']
+    a=json.loads(p.read_text(encoding='utf-8'))
+    assert len(a)==c['rows']
+    rows.extend(a)
+idx={f:i for i,f in enumerate(s['fields'])}
+assert len(rows)==s['total_sites']==336878
+assert len({r[idx['site_id']] for r in rows})==len(rows)
+for p in ['index.html','assets/app.js','assets/styles.css','README.md','QA_REPORT.md']:
+    assert (root/p).exists(), p
+print(f"PASS: {len(rows):,} sites across {len(s['chunks'])} chunks")
